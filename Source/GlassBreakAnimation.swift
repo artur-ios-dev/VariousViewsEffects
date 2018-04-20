@@ -83,6 +83,10 @@ public extension UIView {
     }
 
     private func calculatePieces(for image: UIImage, size: GridSize) -> [[Piece]] {
+        func randomShift(for singlePieceSize: CGSize) -> CGFloat {
+            return CGFloat((-1.0...1.0).random()) * singlePieceSize.width * (0.3...0.9).random()
+        }
+
         var pieces = [[Piece]]()
         let columns = size.columns
         let rows = size.rows
@@ -96,10 +100,10 @@ public extension UIView {
                 point.x = singlePieceSize.width * CGFloat(column)
                 point.y = singlePieceSize.height * CGFloat(row)
                 if column != 0 && column != columns {
-                    point.x += CGFloat((-1.0...1.0).random()) * singlePieceSize.width * (0.3...0.9).random()
+                    point.x += randomShift(for: singlePieceSize)
                 }
                 if row != 0 && row != rows {
-                    point.y += CGFloat((-1.0...1.0).random()) * singlePieceSize.height * (0.3...0.9).random()
+                    point.y += randomShift(for: singlePieceSize)
                 }
 
                 corners[row][column] = point
