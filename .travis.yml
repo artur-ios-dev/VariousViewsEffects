@@ -1,0 +1,2 @@
+language: swift
+script: xcodebuild clean build -project Demo/Demo.xcodeproj -sdk iphonesimulator -scheme Demo
