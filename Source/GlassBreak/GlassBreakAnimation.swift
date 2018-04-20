@@ -82,33 +82,39 @@ public extension UIView {
         CATransaction.commit()
     }
 
-    private func calculatePieces(for image: UIImage, size: GridSize) -> [[Piece]] {
+    private func calculateCorners(for singlePieceSize: CGSize, gridSize: GridSize) -> [[CGPoint]] {
         func randomShift(for singlePieceSize: CGSize) -> CGFloat {
             return CGFloat((-1.0...1.0).random()) * singlePieceSize.width * (0.3...0.9).random()
         }
 
-        var pieces = [[Piece]]()
-        let columns = size.columns
-        let rows = size.rows
+        var corners = Array(repeating: Array(repeating: CGPoint(), count: gridSize.columns + 1), count: gridSize.rows + 1)
 
-        let singlePieceSize = CGSize(width: image.size.width / CGFloat(columns), height: image.size.height / CGFloat(rows))
-        var corners = Array(repeating: Array(repeating: CGPoint(), count: columns + 1), count: rows + 1)
-
-        for row in 0...rows {
-            for column in 0...columns {
+        for row in 0...gridSize.rows {
+            for column in 0...gridSize.columns {
                 var point = corners[row][column]
                 point.x = singlePieceSize.width * CGFloat(column)
                 point.y = singlePieceSize.height * CGFloat(row)
-                if column != 0 && column != columns {
+                if column != 0 && column != gridSize.columns {
                     point.x += randomShift(for: singlePieceSize)
                 }
-                if row != 0 && row != rows {
+                if row != 0 && row != gridSize.rows {
                     point.y += randomShift(for: singlePieceSize)
                 }
 
                 corners[row][column] = point
             }
         }
+
+        return corners
+    }
+
+    private func calculatePieces(for image: UIImage, size: GridSize) -> [[Piece]] {
+        var pieces = [[Piece]]()
+        let columns = size.columns
+        let rows = size.rows
+
+        let singlePieceSize = CGSize(width: image.size.width / CGFloat(columns), height: image.size.height / CGFloat(rows))
+        let corners = calculateCorners(for: singlePieceSize, gridSize: size)
 
         for row in 0..<rows {
             var rowPieces = [Piece]()
@@ -124,8 +130,8 @@ public extension UIView {
                 let maxY = max(lb.y, rb.y)
 
                 let block = CGRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY).integral
-
-                guard let pieceImage = pieceImage(from: image, sourceBlock: block, lt: lt, rt: rt, rb: rb, lb: lb, minX: minX, minY: minY) else {
+                let clipPath = bezierPath(lt: lt, rt: rt, rb: rb, lb: lb, minX: minX, minY: minY, imageScale: image.scale)
+                guard let pieceImage = pieceImage(from: image, sourceBlock: block, clipPath: clipPath) else {
                     continue
                 }
 
@@ -139,7 +145,21 @@ public extension UIView {
         return pieces
     }
 
-    private func pieceImage(from image: UIImage, sourceBlock: CGRect, lt: CGPoint, rt: CGPoint, rb: CGPoint, lb: CGPoint, minX: CGFloat, minY: CGFloat) -> UIImage? {
+    private func bezierPath(lt: CGPoint, rt: CGPoint, rb: CGPoint, lb: CGPoint, minX: CGFloat, minY: CGFloat, imageScale: CGFloat) -> UIBezierPath {
+        let clipPath = UIBezierPath()
+
+        clipPath.move(to: lt)
+        clipPath.addLine(to: rt)
+        clipPath.addLine(to: rb)
+        clipPath.addLine(to: lb)
+        clipPath.close()
+        clipPath.apply(CGAffineTransform(translationX: -minX, y: -minY))
+        clipPath.apply(CGAffineTransform(scaleX: imageScale, y: imageScale))
+
+        return clipPath
+    }
+
+    private func pieceImage(from image: UIImage, sourceBlock: CGRect, clipPath: UIBezierPath) -> UIImage? {
         guard let cgImage = image.cgImage else {
             return nil
         }
@@ -149,32 +169,25 @@ public extension UIView {
                            width: sourceBlock.size.width * image.scale,
                            height: sourceBlock.size.height * image.scale)
 
-        guard let pieceCgImage = cgImage.cropping(to: block) else {
+        UIGraphicsBeginImageContextWithOptions(block.size, false, 1)
+        guard
+            let context = UIGraphicsGetCurrentContext(),
+            let pieceCgImage = cgImage.cropping(to: block)
+        else {
             return nil
         }
-
-        let clipPath = UIBezierPath()
-        clipPath.move(to: lt)
-        clipPath.addLine(to: rt)
-        clipPath.addLine(to: rb)
-        clipPath.addLine(to: lb)
-        clipPath.close()
-        clipPath.apply(CGAffineTransform(translationX: -minX, y: -minY))
-        clipPath.apply(CGAffineTransform(scaleX: image.scale, y: image.scale))
-
-        UIGraphicsBeginImageContextWithOptions(block.size, false, 1)
-        let context = UIGraphicsGetCurrentContext()
         clipPath.addClip()
+
         let tmpImage = UIImage(cgImage: pieceCgImage)
         tmpImage.draw(at: .zero)
 
-        context!.setBlendMode(.copy)
-        context!.setFillColor(UIColor.clear.cgColor)
+        context.setBlendMode(.copy)
+        context.setFillColor(UIColor.clear.cgColor)
 
         let clippedImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
 
-        guard let clippedCgImage =  clippedImage?.cgImage else {
+        guard let clippedCgImage = clippedImage?.cgImage else {
             return nil
         }
 
