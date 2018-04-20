@@ -78,7 +78,6 @@
 		0BDA57482089DFF40037BD2C /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				0BDA57492089DFF40037BD2C /* GlassBreakAnimation.swift */,
 				0BDA574A2089DFF40037BD2C /* GlassBreak */,
 				0BDA574D2089DFF40037BD2C /* UIViewExtensions.swift */,
 				0BDA574E2089DFF40037BD2C /* ClosedRangeExtension.swift */,
@@ -90,6 +89,7 @@
 		0BDA574A2089DFF40037BD2C /* GlassBreak */ = {
 			isa = PBXGroup;
 			children = (
+				0BDA57492089DFF40037BD2C /* GlassBreakAnimation.swift */,
 				0BDA574B2089DFF40037BD2C /* Piece.swift */,
 				0BDA574C2089DFF40037BD2C /* GridSize.swift */,
 			);
