@@ -1,6 +1,6 @@
 # Various View's Effects
 
-[![Platform](http://img.shields.io/badge/platform-iOS-blue.svg?style=flat)](http://cocoapods.org/?q=VariousViewsEffects) [![License](http://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/artrmz/VariousViewsEffects/blob/master/LICENSE)
+[![Platform](http://img.shields.io/badge/platform-iOS-blue.svg?style=flat)](http://cocoapods.org/?q=VariousViewsEffects) [![License](http://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/artrmz/VariousViewsEffects/blob/master/LICENSE) [![Build Status](https://travis-ci.org/artrmz/VariousViewsEffects.svg?branch=master)](https://travis-ci.org/artrmz/VariousViewsEffects)
 
 Various view's effects for iOS, written in Swift. Allows you to animate views nicely with easy to use extensions.
 Currently supported animations:
