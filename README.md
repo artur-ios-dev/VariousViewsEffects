@@ -2,7 +2,10 @@
 
 [![Platform](http://img.shields.io/badge/platform-iOS-blue.svg?style=flat)](http://cocoapods.org/?q=VariousViewsEffects) [![License](http://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/artrmz/VariousViewsEffects/blob/master/LICENSE)
 
-Various view's effects for iOS, written in Swift. Make your views animate nicely with easy to use extensions.
+Various view's effects for iOS, written in Swift. Allows you to animate views nicely with easy to use extensions.
+Currently supported animations:
+
+- **Glass Break**
 
 ![Example](Resources/variousviewseffects.gif?raw=true "VariousViewsEffects")
 
@@ -30,7 +33,7 @@ You can also customize how many pieces views breaks on, if the `view` wich you c
 
 ```swift
 exampleView.breakAnimation(size: GridSize(columns: 15, rows: 21), removeAfterCompletion: true, completion: {
-    print("animation finished)
+    print("animation finished")
 })
 ```
 
