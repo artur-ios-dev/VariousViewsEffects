@@ -9,5 +9,5 @@ Pod::Spec.new do |s|
 	s.source = { :git => 'https://github.com/artrmz/VariousViewsEffects.git', :tag => s.version }
 	s.swift_version = "4.1"
 	s.ios.deployment_target = '9.0'
-	s.source_files = 'Source/*.swift'
+	s.source_files = 'Source/*.swift','Source/*/*.swift'
 end
