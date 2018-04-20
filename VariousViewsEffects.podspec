@@ -7,8 +7,7 @@ Pod::Spec.new do |s|
 	s.author = { '[Artur Rymarz]' => '[artur.rymarz@gmail.com]' }
 	s.homepage = 'https://github.com/artrmz/VariousViewsEffects'
 	s.source = { :git => 'https://github.com/artrmz/VariousViewsEffects.git', :tag => s.version }
-
+	s.swift_version = "4.1"
 	s.ios.deployment_target = '9.0'
-
-	s.source_files = 'Source/*.{h,m}'
+	s.source_files = 'Source/*.swift'
 end
