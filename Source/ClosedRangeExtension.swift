@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension ClosedRange where Bound : FloatingPoint {
+extension ClosedRange where Bound: FloatingPoint {
     func random() -> Bound {
         let max = UInt32.max
         return

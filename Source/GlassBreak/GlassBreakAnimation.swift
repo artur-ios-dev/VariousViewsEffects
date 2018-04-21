@@ -135,7 +135,7 @@ public extension UIView {
                     continue
                 }
 
-                let piece = Piece(position:  block.origin, corners: [lt, rt, rb, lb], image: pieceImage)
+                let piece = Piece(position: block.origin, corners: [lt, rt, rb, lb], image: pieceImage)
                 rowPieces.append(piece)
             }
 
