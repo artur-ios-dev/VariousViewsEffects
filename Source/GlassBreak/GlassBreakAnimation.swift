@@ -24,7 +24,7 @@ public extension UIView {
         breakAnimation(with: pieces, columns: size.columns, removeAfterCompletion: removeAfterCompletion, completion: completion)
     }
 
-    private func breakAnimation(with pieces: [[Piece]], columns: Int, removeAfterCompletion: Bool, completion: (() -> Void)?) {
+    private func breakAnimation(with pieces: [[GlassPiece]], columns: Int, removeAfterCompletion: Bool, completion: (() -> Void)?) {
         let animationView = UIView()
         animationView.clipsToBounds = true
         animationView.frame = self.frame
@@ -39,7 +39,8 @@ public extension UIView {
         animateFalling(allPieceLayers: pieceLayers, columns: CGFloat(columns), animationView: animationView, removeAfterCompletion: removeAfterCompletion, completion: completion)
     }
 
-    private func showJointPieces(_ pieces: [[Piece]], animationView: UIView) -> [CALayer] {
+    // TODO: create protocol and extract for both animations
+    private func showJointPieces(_ pieces: [[GlassPiece]], animationView: UIView) -> [CALayer] {
         var allPieceLayers = [CALayer]()
         for row in 0..<pieces.count {
             for column in 0..<pieces[row].count {
@@ -108,8 +109,8 @@ public extension UIView {
         return corners
     }
 
-    private func calculatePieces(for image: UIImage, size: GridSize) -> [[Piece]] {
-        var pieces = [[Piece]]()
+    private func calculatePieces(for image: UIImage, size: GridSize) -> [[GlassPiece]] {
+        var pieces = [[GlassPiece]]()
         let columns = size.columns
         let rows = size.rows
 
@@ -117,7 +118,7 @@ public extension UIView {
         let corners = calculateCorners(for: singlePieceSize, gridSize: size)
 
         for row in 0..<rows {
-            var rowPieces = [Piece]()
+            var rowPieces = [GlassPiece]()
             for column in 0..<columns {
                 let lt = corners[row][column]
                 let rt = corners[row][column + 1]
@@ -135,7 +136,7 @@ public extension UIView {
                     continue
                 }
 
-                let piece = Piece(position: block.origin, corners: [lt, rt, rb, lb], image: pieceImage)
+                let piece = GlassPiece(position: block.origin, corners: [lt, rt, rb, lb], image: pieceImage)
                 rowPieces.append(piece)
             }
 
