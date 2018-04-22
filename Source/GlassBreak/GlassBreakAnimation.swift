@@ -67,6 +67,7 @@ public extension UIView {
             completion?()
         }
         allPieceLayers.forEach { pieceLayer in
+            // TODO #keyPath(CALayer.transform)
             let animation = CABasicAnimation(keyPath: "transform")
             animation.beginTime = CACurrentMediaTime() + (0.3...1.0).random()
             animation.duration = (0.5...1.0).random()

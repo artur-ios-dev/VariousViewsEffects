@@ -32,6 +32,35 @@ public extension UIView {
         superview.addSubview(animationView)
 
         let pieceLayers = showJointPieces(pieces, animationView: animationView)
+        animateExplosion(with: pieceLayers)
+    }
+
+    private func animateExplosion(with pieces: [CALayer]) {
+        CATransaction.begin()
+        CATransaction.setCompletionBlock {
+//            animationView.removeFromSuperview()
+//            if removeAfterCompletion {
+//                self.removeFromSuperview()
+//            }
+//
+//            completion?()
+        }
+        pieces.forEach { pieceLayer in
+            // TODO #keyPath(CALayer.transform)
+            let animation = CABasicAnimation(keyPath: "transform")
+            animation.beginTime = CACurrentMediaTime()
+            animation.duration = (0.5...1.0).random()
+            animation.fillMode = kCAFillModeForwards
+            animation.isCumulative = true
+            animation.isRemovedOnCompletion = false
+            animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
+            var trans = pieceLayer.transform
+            trans = CATransform3DTranslate(trans, (-15.0...15.0).random(), (0...self.frame.size.height).random() * -0.65, 0)
+//            trans = CATransform3DRotate(trans, (-1.0...1.0).random() * CGFloat.pi * 0.25, 0, 0, 1)
+            animation.toValue = NSValue(caTransform3D: trans)
+            pieceLayer.add(animation, forKey: nil)
+        }
+        CATransaction.commit()
     }
 
     // TODO: extract for both animations

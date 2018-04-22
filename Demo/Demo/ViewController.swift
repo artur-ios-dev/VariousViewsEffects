@@ -12,8 +12,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var exampleView: UIView?
 
     @IBAction func startAnimation(_ sender: Any) {
-        exampleView?.breakAnimation(size: GridSize(columns: 15, rows: 21), removeAfterCompletion: true, completion: {
-            print("animation finished")
-        })
+//        exampleView?.breakAnimation(size: GridSize(columns: 15, rows: 21), removeAfterCompletion: true, completion: {
+//            print("animation finished")
+//        })
+
+        exampleView?.explode()
     }
 }
