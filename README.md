@@ -9,7 +9,11 @@ Currently supported animations:
 
 - **Glass Break**
 
-![Example](Resources/variousviewseffects.gif?raw=true "VariousViewsEffects")
+![Example](Resources/glass-break.gif?raw=true "glass-break")
+
+- **Explode**
+
+![Example](Resources/explode.gif?raw=true "explode")
 
 
 ## Requirements
@@ -28,13 +32,15 @@ pod 'VariousViewsEffects'
 ## Usage
 
 ```swift
-exampleView.breakAnimation()
+exampleView.explode()
+
+exampleView.breakGlass()
 ```
 
 You can also customize how many pieces views breaks on, if the `view` wich you call it on should be removed once animation is finished and also you can define a completion block which will be called after animation finishes.
 
 ```swift
-exampleView.breakAnimation(size: GridSize(columns: 15, rows: 21), removeAfterCompletion: true, completion: {
+exampleView.explode(size: GridSize(columns: 15, rows: 21), removeAfterCompletion: true, completion: {
     print("animation finished")
 })
 ```
