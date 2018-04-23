@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 	s.name = 'VariousViewsEffects'
 	s.summary = 'VariousViewsEffects lets user animate theirs views nicely and easily'
-	s.version = '1.0.0'
+	s.version = '1.1.0'
 	s.platform = :ios
 	s.license = 'MIT'
 	s.author = { '[Artur Rymarz]' => '[artur.rymarz@gmail.com]' }
