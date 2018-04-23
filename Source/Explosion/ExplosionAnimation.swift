@@ -13,10 +13,10 @@ public extension UIView {
     /// Animates the view and hides it afterwards. Does nothing if view has no superview.
     ///
     /// - Parameters:
-    /// - Parameter size: Describes the number of columns and rows on which the view is broken (default: 30x30)
+    /// - Parameter size: Describes the number of columns and rows on which the view is broken (default: 20x40)
     /// - Parameter removeAfterCompletion: Removes view from superview after animation completes
     /// - Parameter completion: Animation completion block
-    public func explode(size: GridSize = GridSize(columns: 30, rows: 30), removeAfterCompletion: Bool = false, completion: (() -> Void)? = nil) {
+    public func explode(size: GridSize = GridSize(columns: 20, rows: 40), removeAfterCompletion: Bool = false, completion: (() -> Void)? = nil) {
         guard let screenshot = self.screenshot, !isHidden else {
             return
         }
@@ -60,7 +60,10 @@ public extension UIView {
             animation.isRemovedOnCompletion = false
             animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
             var trans = pieceLayer.transform
-            trans = CATransform3DTranslate(trans, (-15.0...15.0).random(), (0...self.frame.size.height).random() * -0.65, 0)
+            trans = CATransform3DTranslate(trans,
+                                           (-self.frame.size.width...self.frame.size.width).random() * 0.3,
+                                           (-self.frame.size.height...self.frame.size.height).random() * 0.3,
+                                           0)
             trans = CATransform3DRotate(trans, (-1.0...1.0).random() * CGFloat.pi * 0.25, 0, 0, 1)
             let scale: CGFloat = (0.05...0.65).random()
             trans = CATransform3DScale(trans, scale, scale, 1)
@@ -104,7 +107,6 @@ public extension UIView {
 
         for row in 0..<rows {
             for column in 0..<columns {
-                // TODO: wrong scale?
                 let position = CGPoint(x: CGFloat(column) * singlePieceSize.width, y: CGFloat(row) * singlePieceSize.height)
 
                 let cropRect = CGRect(x: position.x * image.scale,
