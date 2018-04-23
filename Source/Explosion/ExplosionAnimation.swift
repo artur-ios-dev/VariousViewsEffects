@@ -9,18 +9,24 @@
 import UIKit
 
 public extension UIView {
-    public func explode(size: GridSize = GridSize(columns: 10, rows: 10)) {
+    
+    /// Animates the view and hides it afterwards. Does nothing if view has no superview.
+    ///
+    /// - Parameters:
+    /// - Parameter size: Describes the number of columns and rows on which the view is broken (default: 30x30)
+    /// - Parameter removeAfterCompletion: Removes view from superview after animation completes
+    /// - Parameter completion: Animation completion block
+    public func explode(size: GridSize = GridSize(columns: 30, rows: 30), removeAfterCompletion: Bool = false, completion: (() -> Void)? = nil) {
         guard let screenshot = self.screenshot, !isHidden else {
             return
         }
 
         let pieces = calculatePieces(for: screenshot, size: size)
-        explodeAnimation(with: pieces)
+        explodeAnimation(with: pieces, removeAfterCompletion: removeAfterCompletion, completion: completion)
     }
 
 
-    // TODO: extract some methods between both animations (break glass and explosion)
-    private func explodeAnimation(with pieces: [ExplosionPiece]) {
+    private func explodeAnimation(with pieces: [ExplosionPiece], removeAfterCompletion: Bool, completion: (() -> Void)?) {
         let animationView = UIView()
         animationView.clipsToBounds = true
         animationView.frame = self.frame
@@ -32,18 +38,18 @@ public extension UIView {
         superview.addSubview(animationView)
 
         let pieceLayers = showJointPieces(pieces, animationView: animationView)
-        animateExplosion(with: pieceLayers)
+        animateExplosion(with: pieceLayers, animationView: animationView, removeAfterCompletion: removeAfterCompletion, completion: completion)
     }
 
-    private func animateExplosion(with pieces: [CALayer]) {
+    private func animateExplosion(with pieces: [CALayer], animationView: UIView, removeAfterCompletion: Bool, completion: (() -> Void)?) {
         CATransaction.begin()
         CATransaction.setCompletionBlock {
-//            animationView.removeFromSuperview()
-//            if removeAfterCompletion {
-//                self.removeFromSuperview()
-//            }
-//
-//            completion?()
+            animationView.removeFromSuperview()
+            if removeAfterCompletion {
+                self.removeFromSuperview()
+            }
+
+            completion?()
         }
         pieces.forEach { pieceLayer in
             let animation = CABasicAnimation(keyPath: #keyPath(CALayer.transform))
@@ -55,7 +61,7 @@ public extension UIView {
             animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
             var trans = pieceLayer.transform
             trans = CATransform3DTranslate(trans, (-15.0...15.0).random(), (0...self.frame.size.height).random() * -0.65, 0)
-
+            trans = CATransform3DRotate(trans, (-1.0...1.0).random() * CGFloat.pi * 0.25, 0, 0, 1)
             let scale: CGFloat = (0.05...0.65).random()
             trans = CATransform3DScale(trans, scale, scale, 1)
             animation.toValue = NSValue(caTransform3D: trans)
@@ -75,7 +81,6 @@ public extension UIView {
         CATransaction.commit()
     }
 
-    // TODO: extract for both animations
     private func showJointPieces(_ pieces: [ExplosionPiece], animationView: UIView) -> [CALayer] {
         var allPieceLayers = [CALayer]()
         for index in 0..<pieces.count {

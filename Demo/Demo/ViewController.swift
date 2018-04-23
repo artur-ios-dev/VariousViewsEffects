@@ -16,6 +16,13 @@ class ViewController: UIViewController {
 //            print("animation finished")
 //        })
 
-        exampleView?.explode()
+        exampleView?.explode(completion: {
+            self.exampleView?.alpha = 0
+            self.exampleView?.isHidden = false
+
+            UIView.animate(withDuration: 1, animations: {
+                self.exampleView?.alpha = 1
+            })
+        })
     }
 }

@@ -12,7 +12,7 @@ public extension UIView {
 
     /// Animates the view and hides it afterwards. Does nothing if view has no superview.
     ///
-    /// - Parameter size: Describes the number of columns and rows on which the view is broken
+    /// - Parameter size: Describes the number of columns and rows on which the view is broken (default: 10x10)
     /// - Parameter removeAfterCompletion: Removes view from superview after animation completes
     /// - Parameter completion: Animation completion block
     public func breakGlass(size: GridSize = GridSize(columns: 10, rows: 10), removeAfterCompletion: Bool = false, completion: (() -> Void)? = nil) {
@@ -39,7 +39,6 @@ public extension UIView {
         animateFalling(allPieceLayers: pieceLayers, columns: CGFloat(columns), animationView: animationView, removeAfterCompletion: removeAfterCompletion, completion: completion)
     }
 
-    // TODO: create protocol and extract for both animations
     private func showJointPieces(_ pieces: [[GlassPiece]], animationView: UIView) -> [CALayer] {
         var allPieceLayers = [CALayer]()
         for row in 0..<pieces.count {
