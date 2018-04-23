@@ -46,8 +46,7 @@ public extension UIView {
 //            completion?()
         }
         pieces.forEach { pieceLayer in
-            // TODO #keyPath(CALayer.transform)
-            let animation = CABasicAnimation(keyPath: "transform")
+            let animation = CABasicAnimation(keyPath: #keyPath(CALayer.transform))
             animation.beginTime = CACurrentMediaTime()
             animation.duration = (0.5...1.0).random()
             animation.fillMode = kCAFillModeForwards
@@ -56,9 +55,22 @@ public extension UIView {
             animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
             var trans = pieceLayer.transform
             trans = CATransform3DTranslate(trans, (-15.0...15.0).random(), (0...self.frame.size.height).random() * -0.65, 0)
-//            trans = CATransform3DRotate(trans, (-1.0...1.0).random() * CGFloat.pi * 0.25, 0, 0, 1)
+
+            let scale: CGFloat = (0.05...0.65).random()
+            trans = CATransform3DScale(trans, scale, scale, 1)
             animation.toValue = NSValue(caTransform3D: trans)
             pieceLayer.add(animation, forKey: nil)
+
+            let opacityAnimation = CABasicAnimation(keyPath: #keyPath(CALayer.opacity))
+            opacityAnimation.beginTime = CACurrentMediaTime() + (0.01...0.3).random()
+            opacityAnimation.duration = (0.3...0.7).random()
+            opacityAnimation.fillMode = kCAFillModeForwards
+            opacityAnimation.isCumulative = true
+            opacityAnimation.isRemovedOnCompletion = false
+            opacityAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
+            opacityAnimation.toValue = 0
+            pieceLayer.add(opacityAnimation, forKey: nil)
+
         }
         CATransaction.commit()
     }
@@ -90,7 +102,10 @@ public extension UIView {
                 // TODO: wrong scale?
                 let position = CGPoint(x: CGFloat(column) * singlePieceSize.width, y: CGFloat(row) * singlePieceSize.height)
 
-                let cropRect = CGRect(origin: position, size: singlePieceSize)
+                let cropRect = CGRect(x: position.x * image.scale,
+                                      y: position.y * image.scale,
+                                      width: singlePieceSize.width * image.scale,
+                                      height: singlePieceSize.height * image.scale)
                 guard
                     let cgImage = image.cgImage,
                     let pieceCgImage = cgImage.cropping(to: cropRect)
@@ -98,7 +113,7 @@ public extension UIView {
                     continue
                 }
 
-                let pieceImage = UIImage(cgImage: pieceCgImage)
+                let pieceImage = UIImage.init(cgImage: pieceCgImage, scale: image.scale, orientation: image.imageOrientation)
                 let piece = ExplosionPiece(position: position, image: pieceImage)
                 pieces.append(piece)
             }

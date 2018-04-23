@@ -15,7 +15,7 @@ public extension UIView {
     /// - Parameter size: Describes the number of columns and rows on which the view is broken
     /// - Parameter removeAfterCompletion: Removes view from superview after animation completes
     /// - Parameter completion: Animation completion block
-    public func breakAnimation(size: GridSize = GridSize(columns: 10, rows: 10), removeAfterCompletion: Bool = false, completion: (() -> Void)? = nil) {
+    public func breakGlass(size: GridSize = GridSize(columns: 10, rows: 10), removeAfterCompletion: Bool = false, completion: (() -> Void)? = nil) {
         guard let screenshot = self.screenshot, !isHidden else {
             return
         }
@@ -67,8 +67,7 @@ public extension UIView {
             completion?()
         }
         allPieceLayers.forEach { pieceLayer in
-            // TODO #keyPath(CALayer.transform)
-            let animation = CABasicAnimation(keyPath: "transform")
+            let animation = CABasicAnimation(keyPath: #keyPath(CALayer.transform))
             animation.beginTime = CACurrentMediaTime() + (0.3...1.0).random()
             animation.duration = (0.5...1.0).random()
             animation.fillMode = kCAFillModeForwards
