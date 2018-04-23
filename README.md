@@ -1,13 +1,19 @@
 # Various View's Effects
 
-[![Platform](http://img.shields.io/badge/platform-iOS-blue.svg?style=flat)](http://cocoapods.org/?q=VariousViewsEffects) [![License](http://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/artrmz/VariousViewsEffects/blob/master/LICENSE) [![Build Status](https://travis-ci.org/artrmz/VariousViewsEffects.svg?branch=master)](https://travis-ci.org/artrmz/VariousViewsEffects) [![Maintainability](https://api.codeclimate.com/v1/badges/9f55dae54f5489f57c3d/maintainability)](https://codeclimate.com/github/artrmz/VariousViewsEffects/maintainability)
+[![Platform](http://img.shields.io/badge/platform-iOS-blue.svg?style=flat)](http://cocoapods.org/?q=VariousViewsEffects) [![License](http://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/artrmz/VariousViewsEffects/blob/master/LICENSE)
+
+[![Build Status](https://travis-ci.org/artrmz/VariousViewsEffects.svg?branch=master)](https://travis-ci.org/artrmz/VariousViewsEffects) [![Maintainability](https://api.codeclimate.com/v1/badges/9f55dae54f5489f57c3d/maintainability)](https://codeclimate.com/github/artrmz/VariousViewsEffects/maintainability)
 
 Various view's effects for iOS, written in Swift. Allows you to animate views nicely with easy to use extensions.
 Currently supported animations:
 
 - **Glass Break**
 
-![Example](Resources/variousviewseffects.gif?raw=true "VariousViewsEffects")
+![Example](Resources/glass-break.gif?raw=true "glass-break")
+
+- **Explode**
+
+![Example](Resources/explode.gif?raw=true "explode")
 
 
 ## Requirements
@@ -26,13 +32,15 @@ pod 'VariousViewsEffects'
 ## Usage
 
 ```swift
-exampleView.breakAnimation()
+exampleView.explode()
+
+exampleView.breakGlass()
 ```
 
 You can also customize how many pieces views breaks on, if the `view` which you call it on should be removed once animation is finished and also you can define a completion block which will be called after animation finishes.
 
 ```swift
-exampleView.breakAnimation(size: GridSize(columns: 15, rows: 21), removeAfterCompletion: true, completion: {
+exampleView.explode(size: GridSize(columns: 15, rows: 21), removeAfterCompletion: true, completion: {
     print("animation finished")
 })
 ```

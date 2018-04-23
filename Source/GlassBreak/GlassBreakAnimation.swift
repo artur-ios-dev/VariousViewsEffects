@@ -12,10 +12,10 @@ public extension UIView {
 
     /// Animates the view and hides it afterwards. Does nothing if view has no superview.
     ///
-    /// - Parameter size: Describes the number of columns and rows on which the view is broken
+    /// - Parameter size: Describes the number of columns and rows on which the view is broken (default: 10x10)
     /// - Parameter removeAfterCompletion: Removes view from superview after animation completes
     /// - Parameter completion: Animation completion block
-    public func breakAnimation(size: GridSize = GridSize(columns: 10, rows: 10), removeAfterCompletion: Bool = false, completion: (() -> Void)? = nil) {
+    public func breakGlass(size: GridSize = GridSize(columns: 10, rows: 10), removeAfterCompletion: Bool = false, completion: (() -> Void)? = nil) {
         guard let screenshot = self.screenshot, !isHidden else {
             return
         }
@@ -24,7 +24,7 @@ public extension UIView {
         breakAnimation(with: pieces, columns: size.columns, removeAfterCompletion: removeAfterCompletion, completion: completion)
     }
 
-    private func breakAnimation(with pieces: [[Piece]], columns: Int, removeAfterCompletion: Bool, completion: (() -> Void)?) {
+    private func breakAnimation(with pieces: [[GlassPiece]], columns: Int, removeAfterCompletion: Bool, completion: (() -> Void)?) {
         let animationView = UIView()
         animationView.clipsToBounds = true
         animationView.frame = self.frame
@@ -39,7 +39,7 @@ public extension UIView {
         animateFalling(allPieceLayers: pieceLayers, columns: CGFloat(columns), animationView: animationView, removeAfterCompletion: removeAfterCompletion, completion: completion)
     }
 
-    private func showJointPieces(_ pieces: [[Piece]], animationView: UIView) -> [CALayer] {
+    private func showJointPieces(_ pieces: [[GlassPiece]], animationView: UIView) -> [CALayer] {
         var allPieceLayers = [CALayer]()
         for row in 0..<pieces.count {
             for column in 0..<pieces[row].count {
@@ -66,7 +66,7 @@ public extension UIView {
             completion?()
         }
         allPieceLayers.forEach { pieceLayer in
-            let animation = CABasicAnimation(keyPath: "transform")
+            let animation = CABasicAnimation(keyPath: #keyPath(CALayer.transform))
             animation.beginTime = CACurrentMediaTime() + (0.3...1.0).random()
             animation.duration = (0.5...1.0).random()
             animation.fillMode = kCAFillModeForwards
@@ -108,8 +108,8 @@ public extension UIView {
         return corners
     }
 
-    private func calculatePieces(for image: UIImage, size: GridSize) -> [[Piece]] {
-        var pieces = [[Piece]]()
+    private func calculatePieces(for image: UIImage, size: GridSize) -> [[GlassPiece]] {
+        var pieces = [[GlassPiece]]()
         let columns = size.columns
         let rows = size.rows
 
@@ -117,7 +117,7 @@ public extension UIView {
         let corners = calculateCorners(for: singlePieceSize, gridSize: size)
 
         for row in 0..<rows {
-            var rowPieces = [Piece]()
+            var rowPieces = [GlassPiece]()
             for column in 0..<columns {
                 let lt = corners[row][column]
                 let rt = corners[row][column + 1]
@@ -135,7 +135,7 @@ public extension UIView {
                     continue
                 }
 
-                let piece = Piece(position:  block.origin, corners: [lt, rt, rb, lb], image: pieceImage)
+                let piece = GlassPiece(position: block.origin, corners: [lt, rt, rb, lb], image: pieceImage)
                 rowPieces.append(piece)
             }
 

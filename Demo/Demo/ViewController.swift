@@ -11,9 +11,24 @@ import UIKit
 class ViewController: UIViewController {
     @IBOutlet weak var exampleView: UIView?
 
-    @IBAction func startAnimation(_ sender: Any) {
-        exampleView?.breakAnimation(size: GridSize(columns: 15, rows: 21), removeAfterCompletion: true, completion: {
-            print("animation finished")
+    @IBAction func explode(_ sender: Any) {
+        exampleView?.explode(completion: {
+            self.reshowImage()
+        })
+    }
+
+    @IBAction func breakGlass(_ sender: Any) {
+        exampleView?.breakGlass(size: GridSize(columns: 15, rows: 21), completion: {
+            self.reshowImage()
+        })
+    }
+
+    private func reshowImage() {
+        self.exampleView?.alpha = 0
+        self.exampleView?.isHidden = false
+
+        UIView.animate(withDuration: 1, animations: {
+            self.exampleView?.alpha = 1
         })
     }
 }
