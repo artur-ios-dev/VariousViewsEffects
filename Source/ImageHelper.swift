@@ -5,7 +5,7 @@
 //  Created by Artur Rymarz on 24.04.2018.
 //
 
-import Foundation
+import UIKit
 
 internal class ImagesHelper {
     static func imageFor(name imageName: String) -> UIImage? {
