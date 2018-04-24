@@ -1,4 +1,6 @@
 language: swift
 osx_image: xcode9.3
-script: pod install
-script: xcodebuild clean build -project Demo/Demo.xcodeproj -sdk iphonesimulator -scheme Demo
+before_install:
+- gem install cocoapods
+- pod install
+script: xcodebuild clean build -workspace Demo/Demo.xcworkspace -sdk iphonesimulator -scheme Demo
