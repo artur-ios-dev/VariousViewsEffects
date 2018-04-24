@@ -59,4 +59,15 @@ public extension UIView {
         cell.contents = UIImage(named: "snowflake")?.cgImage
         return cell
     }
+
+    func loadImageBundle(named imageName:String) -> UIImage? {
+        let podBundle = Bundle(for: self.classForCoder)
+        if let bundleURL = podBundle.url(forResource: "Resources", withExtension: "bundle")
+        {
+            let imageBundel = Bundle(url:bundleURL )
+            let image = UIImage(named: imageName, in: imageBundel, compatibleWith: nil)
+            return image
+        }
+        return nil
+    }
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import VariousViewsEffects
 
 class ViewController: UIViewController {
     @IBOutlet weak var exampleView: UIView?
