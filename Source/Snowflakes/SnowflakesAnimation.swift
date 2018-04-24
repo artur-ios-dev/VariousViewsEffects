@@ -56,7 +56,7 @@ public extension UIView {
         cell.scaleRange = 0.5
         cell.scaleSpeed = -0.05
 
-        cell.contents = UIImage(named: "snowflake")?.cgImage
+        cell.contents = ImagesHelper.imageFor(name: "snowflake")?.cgImage
         return cell
     }
 }
