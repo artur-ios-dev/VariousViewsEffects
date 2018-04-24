@@ -33,15 +33,17 @@ pod 'VariousViewsEffects'
 ## Usage
 
 ```swift
-exampleView.explode()
+view.explode()
 
-exampleView.breakGlass()
+view.breakGlass()
+
+view.addSnowflakes(amount: 10, speed: .slow)
 ```
 
 You can also customize how many pieces views breaks on, if the `view` which you call it on should be removed once animation is finished and also you can define a completion block which will be called after animation finishes.
 
 ```swift
-exampleView.explode(size: GridSize(columns: 15, rows: 21), removeAfterCompletion: true, completion: {
+view.explode(size: GridSize(columns: 15, rows: 21), removeAfterCompletion: true, completion: {
     print("animation finished")
 })
 ```
