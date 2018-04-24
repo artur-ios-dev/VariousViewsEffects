@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import VariousViewsEffects
 
 class ViewController: UIViewController {
     @IBOutlet weak var exampleView: UIView?
@@ -21,6 +22,10 @@ class ViewController: UIViewController {
         exampleView?.breakGlass(size: GridSize(columns: 15, rows: 21), completion: {
             self.reshowImage()
         })
+    }
+
+    @IBAction func showSnowflakes(_ sender: Any) {
+        exampleView?.addSnowflakes(amount: 10, speed: .slow)
     }
 
     private func reshowImage() {

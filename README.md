@@ -13,6 +13,9 @@ Currently supported animations:
 
 ![Example](Resources/explode.gif?raw=true "explode")
 
+- **Snowflakes**
+
+![Example](Resources/snowflakes.gif?raw=true "snowflakes")
 
 ## Requirements
 - iOS 9.0+

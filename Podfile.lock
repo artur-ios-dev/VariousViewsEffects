@@ -1,0 +1,16 @@
+PODS:
+  - VariousViewsEffects (1.1.0)
+
+DEPENDENCIES:
+  - VariousViewsEffects (from `.`)
+
+EXTERNAL SOURCES:
+  VariousViewsEffects:
+    :path: "."
+
+SPEC CHECKSUMS:
+  VariousViewsEffects: a8d06b29feae2aa6c08e464bbf94980a5d7c9c5f
+
+PODFILE CHECKSUM: cc09ef09ebb358acf12099035f28ac6ef33f5dc0
+
+COCOAPODS: 1.5.0
