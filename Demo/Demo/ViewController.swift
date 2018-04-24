@@ -23,6 +23,10 @@ class ViewController: UIViewController {
         })
     }
 
+    @IBAction func showSnowflakes(_ sender: Any) {
+        exampleView?.addSnowflakes(amount: 10, speed: .slow)
+    }
+
     private func reshowImage() {
         self.exampleView?.alpha = 0
         self.exampleView?.isHidden = false

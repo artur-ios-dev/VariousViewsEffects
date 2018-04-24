@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,23 +20,33 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="Sample" translatesAutoresizingMaskIntoConstraints="NO" id="W93-LT-woS">
-                                <rect key="frame" x="8" y="50" width="359" height="600"/>
+                                <rect key="frame" x="8" y="200.5" width="359" height="266"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="W93-LT-woS" secondAttribute="height" multiplier="800:600" constant="4" id="WYa-2U-0nQ"/>
+                                </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="bbL-RR-J8Z">
                                 <rect key="frame" x="0.0" y="20" width="375" height="30"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vfm-57-d8e">
-                                        <rect key="frame" x="0.0" y="0.0" width="187.5" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="125" height="30"/>
                                         <state key="normal" title="Break Glass"/>
                                         <connections>
                                             <action selector="breakGlass:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BEI-GO-x1B"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1nr-Li-yaj">
-                                        <rect key="frame" x="187.5" y="0.0" width="187.5" height="30"/>
+                                        <rect key="frame" x="125" y="0.0" width="125" height="30"/>
                                         <state key="normal" title="Explode"/>
                                         <connections>
                                             <action selector="explode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eYC-72-ZoQ"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lol-E1-qvP">
+                                        <rect key="frame" x="250" y="0.0" width="125" height="30"/>
+                                        <state key="normal" title="Snowflakes"/>
+                                        <connections>
+                                            <action selector="showSnowflakes:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7sl-xs-JAu"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -45,10 +56,11 @@
                         <constraints>
                             <constraint firstItem="bbL-RR-J8Z" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="FaH-xc-yAe"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="W93-LT-woS" secondAttribute="trailing" constant="8" id="MOH-NV-eXq"/>
-                            <constraint firstItem="W93-LT-woS" firstAttribute="top" secondItem="bbL-RR-J8Z" secondAttribute="bottom" id="RwN-qd-F2P"/>
+                            <constraint firstItem="W93-LT-woS" firstAttribute="top" relation="greaterThanOrEqual" secondItem="bbL-RR-J8Z" secondAttribute="bottom" id="RwN-qd-F2P"/>
                             <constraint firstItem="bbL-RR-J8Z" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="m0D-eT-8PK"/>
                             <constraint firstItem="W93-LT-woS" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="miy-Eu-FdJ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bbL-RR-J8Z" secondAttribute="trailing" id="p01-pc-3Ix"/>
+                            <constraint firstItem="W93-LT-woS" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="pmC-9f-JBE"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="W93-LT-woS" secondAttribute="bottom" constant="8" id="ubu-t4-gpU"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
